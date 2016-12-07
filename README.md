@@ -6,7 +6,8 @@ Very much like a virtual camera floating ontop of the canvas.
 
 ## Examples
 
-* [graph game](examples/graph_game)
+* [graph game](https://bitcraftlab.github.io/p5.canvascam/examples/graph_game/)
+
 
 ## License
 
