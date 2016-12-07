@@ -75,7 +75,7 @@ function keyTyped() {
       cam.reset();
       break;
     case ' ':
-      level = (level + 1) % 21;
+      level = (level + 1) % 22;
       graph = new Graph(data[level]);
       break;
     case 'd':
