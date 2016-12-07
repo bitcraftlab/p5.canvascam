@@ -35,6 +35,7 @@ function preload() {
 }
 
 function setup() {
+  console.log(data);
   createCanvas(windowWidth, windowHeight);
   cam = new Camera();
   graph = new Graph(data[level]);
@@ -74,7 +75,7 @@ function keyTyped() {
       cam.reset();
       break;
     case ' ':
-      level = (level + 1) % data.length;
+      level = (level + 1) % 21;
       graph = new Graph(data[level]);
       break;
     case 'd':
