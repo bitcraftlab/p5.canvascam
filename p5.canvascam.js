@@ -11,6 +11,9 @@
 // Use this if you want to make your sketch zoomable and draggable
 // Original java version here: https://github.com/bitcraftlab/canvascam/
 
+// Changes by github.com/branisha
+// TODO: add rotation
+
 p5.prototype.Camera = function(zoom, tx, ty) {
 
   // variables for storing defaults
@@ -30,6 +33,14 @@ p5.prototype.Camera = function(zoom, tx, ty) {
     ty = ty0 = _ty || ty0 || 0;
   }
 
+  var __f = p5.prototype.resetMatrix;
+  p5.prototype.resetMatrix = function(){
+      __f.bind(p5.instance)();
+      translate(width/2, height/2);
+      scale(zoom);
+      translate(-tx, -ty);
+    }
+    window.resetMatrix = p5.prototype.resetMatrix;
   // update mouse coordinates of the camera
   var _updateNextMouseCoords = p5.prototype._updateNextMouseCoords;
   p5.prototype._updateNextMouseCoords = function(e) {
@@ -50,14 +61,6 @@ p5.prototype.Camera = function(zoom, tx, ty) {
     // this._setProperty('pcamMouseY', cam.pmouseY);
   };
 
-  // reset the matrix to camera defaults (called at the beginning of every redraw function)
-  p5.prototype.resetMatrix = function() {
-    this._renderer.resetMatrix();
-    translate(width/2, height/2);
-    scale(zoom);
-    translate(-tx, -ty);
-    return this;
-  };
 
   // cam x-coord to canvas x-coord
   function camX(x) {
@@ -82,10 +85,30 @@ p5.prototype.Camera = function(zoom, tx, ty) {
     zoom = newZoom;
   };
 
+  this.getX = function(){
+    return tx;
+  }
+
+  this.getY = function(){
+    return ty;
+  }
+
+  this.moveX = function(dx){
+    tx += dx * 1/zoom;
+  }
+
+  this.moveY = function(dy){
+    ty += dy * 1/zoom;
+  }
+
   // translate the origin of the camera's coordinate system
   this.translate = function(dx, dy) {
-    tx += dx;
-    ty += dy;
+    this.moveX(dx);
+    this.moveY(dy);
   };
+
+  this.zoom = function(factor){
+    this.scale(factor, width/2, height/2);
+  }
 
 };
